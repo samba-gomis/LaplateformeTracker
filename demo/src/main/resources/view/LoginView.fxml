@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="174.0" maxWidth="391.0" prefHeight="174.0" prefWidth="391.0" stylesheets="@loginview.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" spacing="20.0" stylesheets="@loginview.css">
+         <children>
+            <Label id="labelText" stylesheets="@loginview.css" text="Welcome back! " textFill="#0b7cb5">
+               <VBox.margin>
+                  <Insets left="95.0" top="-40.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <input>
+                        <ColorAdjust brightness="-0.56" contrast="0.53" hue="0.31" saturation="0.05" />
+                     </input>
+                     <color>
+                        <Color red="0.06351526826620102" green="0.6052631735801697" blue="0.33438920974731445" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Orbitron Regular" size="13.0" />
+               </font>
+            </Label>
+            <TextField id="nameInput" fx:id="userInput" accessibleHelp="Enter your Username" accessibleText="Enter username" alignment="CENTER" cache="true" onAction="#OnInputClick" prefHeight="25.0" prefWidth="120.0" promptText="Enter Username ex: Onizukadu15" stylesheets="@loginview.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="0.0235294122248888" green="0.11764705926179886" blue="0.6039215922355652" />
+                     </color>
+                  </InnerShadow>
+               </effect>
+               <font>
+                  <Font name="Orbitron Regular" size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="passwordInput" accessibleHelp="Enter the password you created" accessibleText="Enter your password" alignment="CENTER" onAction="#OnPasswordClick" promptText="Enter your password" stylesheets="@loginview.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+               <effect>
+                  <InnerShadow>
+                     <color>
+                        <Color red="0.0235294122248888" green="0.11764705926179886" blue="0.6039215922355652" />
+                     </color></InnerShadow>
+               </effect>
+               <font>
+                  <Font name="Orbitron Regular" size="14.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="validateButton" alignment="CENTER" mnemonicParsing="false" onAction="#OnRegisterClick" stylesheets="@loginview.css" text="Validate" textFill="#0c344a">
+               <VBox.margin>
+                  <Insets left="110.0" top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.1921568661928177" green="0.03529411926865578" blue="0.6666666865348816" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Orbitron Regular" size="13.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="100.0" />
+         </padding>
+      </VBox>
+      <ImageView blendMode="MULTIPLY" fitHeight="306.0" fitWidth="711.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/img3.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</StackPane>
