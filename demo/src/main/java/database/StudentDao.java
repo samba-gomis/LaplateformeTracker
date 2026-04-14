@@ -9,12 +9,12 @@ import java.util.List;
 //StudentDAO (Data Access Object) - Contains all SQL queries to interact with the "student" table in the database
 // Uses PreparedStatements to prevent SQL injection attacks
 
-public class StudentDAO {
+public class StudentDao {
 
     // Connection retrieved via the Singleton
     private final Connection connection;
 
-    public StudentDAO() {
+    public StudentDao() {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
