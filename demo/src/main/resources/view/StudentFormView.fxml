@@ -15,8 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane prefHeight="574.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentFormView">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="400.0">
          <children>
@@ -45,7 +44,7 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="81.0" prefWidth="391.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="65.0" prefWidth="400.0">
                <children>
                   <TextField fx:id="firstNameField" alignment="CENTER" promptText="First name ex.Gandalf">
                      <font>
@@ -61,7 +60,7 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="79.0" prefWidth="375.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="63.0" prefWidth="400.0">
                <children>
                   <TextField fx:id="ageText" alignment="CENTER" promptText="Age ex.106">
                      <font>
@@ -77,7 +76,7 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="78.0" prefWidth="400.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="61.0" prefWidth="400.0">
                <children>
                   <TextField fx:id="gradeField" alignment="CENTER" promptText="Grade ex.16.3">
                      <font>
@@ -102,26 +101,41 @@
       </ImageView>
       <HBox alignment="BOTTOM_CENTER">
          <children>
-            <Button fx:id="validateBtn" mnemonicParsing="false" onAction="#onValidate" prefHeight="25.0" prefWidth="75.0" text="Validate" textFill="#0d2b98">
-               <font>
-                  <Font name="Orbitron Regular" size="12.0" />
-               </font>
-               <effect>
-                  <Reflection fraction="0.71" topOpacity="0.48">
-                     <input>
-                        <DropShadow>
-                           <color>
-                              <Color green="0.01568627543747425" blue="0.4901960790157318" />
-                           </color>
-                        </DropShadow>
-                     </input>
-                  </Reflection>
-               </effect>
-            </Button>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="436.0" prefWidth="278.0" spacing="2.0">
+               <children>
+                  <Button fx:id="validateBtn" mnemonicParsing="false" onAction="#onValidate" prefHeight="25.0" prefWidth="75.0" text="Validate" textFill="#0d2b98">
+                     <font>
+                        <Font name="Orbitron Regular" size="12.0" />
+                     </font>
+                     <effect>
+                        <Reflection fraction="0.71" topOpacity="0.48">
+                           <input>
+                              <DropShadow>
+                                 <color>
+                                    <Color green="0.01568627543747425" blue="0.4901960790157318" />
+                                 </color>
+                              </DropShadow>
+                           </input>
+                        </Reflection>
+                     </effect>
+                  </Button>
+                  <Label prefHeight="15.0" prefWidth="182.0" text="Error! Something is Wrong!" textFill="RED" visible="false">
+                     <font>
+                        <Font name="Orbitron Regular" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
          </children>
          <padding>
             <Insets bottom="140.0" />
          </padding>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
       </HBox>
    </children>
 </StackPane>
