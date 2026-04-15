@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentFormView">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentFormController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="400.0">
          <children>
@@ -103,7 +103,7 @@
          <children>
             <VBox alignment="BOTTOM_CENTER" prefHeight="436.0" prefWidth="278.0" spacing="2.0">
                <children>
-                  <Button fx:id="validateBtn" mnemonicParsing="false" onAction="#onValidate" prefHeight="25.0" prefWidth="75.0" text="Validate" textFill="#0d2b98">
+                  <Button fx:id="validateBtn" mnemonicParsing="false" onAction="#OnValidate" prefHeight="25.0" prefWidth="75.0" text="Validate" textFill="#0d2b98">
                      <font>
                         <Font name="Orbitron Regular" size="12.0" />
                      </font>
