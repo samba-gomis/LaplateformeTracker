@@ -26,7 +26,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <TabPane prefHeight="853.0" prefWidth="1109.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <tabs>
       <Tab text="Students List">
@@ -100,7 +99,7 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <MenuBar prefHeight="25.0" prefWidth="1098.0">
+                        <MenuBar prefHeight="25.0" prefWidth="1105.0">
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
