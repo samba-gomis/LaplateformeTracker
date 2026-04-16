@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="1109.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+   <tabs>
+      <Tab text="Students List">
+         <content>
+            <BorderPane>
+               <center>
+                  <TableView fx:id="studentTable" prefHeight="323.0" prefWidth="651.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                    <columns>
+                        <TableColumn fx:id="colID" prefWidth="124.66662847995758" text="ID" />
+                      <TableColumn fx:id="colName" minWidth="2.66668701171875" prefWidth="127.33330535888672" text="Name" />
+                      <TableColumn fx:id="colSurname" minWidth="0.0" prefWidth="138.66664123535156" text="Surname" />
+                        <TableColumn fx:id="colAge" prefWidth="121.33331298828125" text="Age" />
+                        <TableColumn fx:id="colGrade" minWidth="-1.0" prefWidth="143.99996948242188" text="Grade" />
+                    </columns>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </TableView>
+               </center>
+               <top>
+                  <Group BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox prefHeight="96.0" prefWidth="797.0">
+                           <children>
+                              <HBox prefHeight="115.0" prefWidth="802.0" spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="searchField" onAction="#onSearch" prefHeight="25.0" prefWidth="164.0" promptText="Search bar...">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <MenuButton fx:id="sortMenuButton" mnemonicParsing="false" text="Sort by">
+                                      <items>
+                                        <MenuItem fx:id="itemSortID" mnemonicParsing="false" onAction="#onSortByID" text="ID" />
+                                        <MenuItem fx:id="itemSortName" mnemonicParsing="false" onAction="#onSortByName" text="Name" />
+                                          <MenuItem fx:id="itemSortSurname" mnemonicParsing="false" onAction="#onSortBySurname" text="Surname" />
+                                          <MenuItem fx:id="itemSortAge" mnemonicParsing="false" onAction="#onSortByAge" text="Age" />
+                                          <MenuItem fx:id="itemSortGPA" mnemonicParsing="false" onAction="#onSortByGPA" text="GPA" />
+                                      </items>
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </MenuButton>
+                                    <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#onSearch" text="Search">
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="addBtn" mnemonicParsing="false" onAction="#onAdd" text="Add Students">
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#onDelete" prefHeight="25.0" prefWidth="88.0" text="Delete">
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="modifyBtn" mnemonicParsing="false" onAction="#onModify" prefHeight="25.0" prefWidth="89.0" text="Modify">
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="errorLabel" textFill="RED" visible="false">
+                                       <font>
+                                          <Font name="Orbitron Regular" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="5.0" top="80.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <MenuBar prefHeight="25.0" prefWidth="1105.0">
+                          <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                              <items>
+                                    <Menu mnemonicParsing="false" text="Export">
+                                       <items>
+                                          <MenuItem fx:id="exportCsv" mnemonicParsing="false" onAction="#onExportCSV" text="Export in CSV" />
+                                          <MenuItem fx:id="exportXML" mnemonicParsing="false" onAction="#onExportXML" text="Export in XML" />
+                                          <MenuItem fx:id="exportJSON" mnemonicParsing="false" onAction="#onExportJSON" text="Export in JSON" />
+                                       </items>
+                                    </Menu>
+                                    <Menu mnemonicParsing="false" text="Import">
+                                       <items>
+                                          <MenuItem fx:id="importCVS" mnemonicParsing="false" onAction="#onImportCSV" text="Import in CSV" />
+                                          <MenuItem fx:id="importXML" mnemonicParsing="false" onAction="#onImportXML" text="Import in XML" />
+                                          <MenuItem fx:id="importJSON" mnemonicParsing="false" onAction="#onImportJSON" text="Import in JSON" />
+                                       </items>
+                                    </Menu>
+                              </items>
+                            </Menu>
+                              <Menu mnemonicParsing="false" text="Settings">
+                                 <items>
+                                    <MenuItem fx:id="logOutBtn" mnemonicParsing="false" onAction="#onLogOut" text="Log out" />
+                                    <MenuItem mnemonicParsing="false" text="Help" />
+                                 </items>
+                              </Menu>
+                          </menus>
+                        </MenuBar>
+                     </children>
+                  </Group>
+               </top>
+               <bottom>
+                  <VBox prefHeight="53.0" prefWidth="669.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Pagination fx:id="pagination" prefHeight="46.0" prefWidth="394.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Pagination>
+                     </children>
+                  </VBox>
+               </bottom>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab text="Analysis">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="835.0" prefWidth="1101.0">
+               <children>
+                  <HBox alignment="CENTER" layoutX="4.0" layoutY="173.0" prefHeight="649.0" prefWidth="1109.0">
+                     <children>
+                        <PieChart fx:id="agePieChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="747.0" prefWidth="498.0" title="Age Distribution" />
+                        <BarChart fx:id="gradesBarChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="708.0" prefWidth="551.0" title="Grade Average ">
+                          <xAxis>
+                            <CategoryAxis label="Class Sections" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Grades" side="LEFT" upperBound="20.0" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </HBox>
+                  <ToolBar layoutX="-1.0" prefHeight="42.0" prefWidth="1117.0" scaleZ="0.0" AnchorPane.bottomAnchor="782.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-7.3333333333332575" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <CheckBox fx:id="autoSaveToggle" mnemonicParsing="false" onAction="#onToggleAutoSave" text="Auto Save">
+                           <padding>
+                              <Insets right="30.0" />
+                           </padding>
+                           <font>
+                              <Font name="Orbitron Regular" size="12.0" />
+                           </font>
+                        </CheckBox>
+                        <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" prefHeight="25.0" prefWidth="112.0" text="File Actions">
+                          <items>
+                            <MenuItem fx:id="pdfExport" mnemonicParsing="false" onAction="#onExportPdf" text="Export to PDF" />
+                            <MenuItem fx:id="htmlExport" mnemonicParsing="false" onAction="#onExportHtml" text="Export to HTML" />
+                              <MenuItem fx:id="csvExport" mnemonicParsing="false" onAction="#onExportCSV" text="Export in CSV" />
+                          </items>
+                           <font>
+                              <Font name="Orbitron Regular" size="12.0" />
+                           </font>
+                        </MenuButton>
+                    </items>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </ToolBar>
+                  <Label fx:id="avgLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="42.0" prefHeight="51.0" prefWidth="608.0">
+                     <font>
+                        <Font name="Orbitron Regular" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalStudentsLabel" layoutY="42.0" prefHeight="63.0" prefWidth="1139.0">
+                     <font>
+                        <Font name="Orbitron Regular" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>
