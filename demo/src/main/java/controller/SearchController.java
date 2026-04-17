@@ -1,16 +1,16 @@
 package controller;
 
-import dao.StudentDAO;
+import database.StudentDao;
 import model.Student;
 
 import java.util.List;
 
 public class SearchController {
 
-    private StudentDAO studentDAO;
+    private StudentDao StudentDao;
 
     public SearchController() {
-        this.studentDAO = new StudentDAO();
+        this.StudentDao = new StudentDao();
     }
 
     public Student searchById(int id) {
@@ -19,7 +19,7 @@ public class SearchController {
             throw new IllegalArgumentException("ID invalide");
         }
 
-        Student student = studentDAO.getStudentById(id);
+        Student student = StudentDao.getStudentById(id);
 
         if (student == null) {
             throw new RuntimeException("Étudiant introuvable");
@@ -29,6 +29,6 @@ public class SearchController {
     }
 
     public List<Student> getAllStudents() {
-        return studentDAO.getAllStudents();
+        return StudentDao.getAllStudents();
     }
 }

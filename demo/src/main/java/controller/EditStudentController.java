@@ -1,14 +1,14 @@
 package controller;
 
-import dao.StudentDAO;
+import database.StudentDao;
 import model.Student;
 
 public class EditStudentController {
 
-    private StudentDAO studentDAO;
+    private StudentDao StudentDao;
 
     public EditStudentController() {
-        this.studentDAO = new StudentDAO();
+        this.StudentDao = new StudentDao();
     }
 
     public void updateStudent(int id, String firstName, String lastName, int age, double grade) {
@@ -35,7 +35,7 @@ public class EditStudentController {
 
         try {
             Student student = new Student(id, firstName, lastName, age, grade);
-            studentDAO.updateStudent(student);
+            StudentDao.updateStudent(student);
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de la modification");
         }
@@ -48,7 +48,7 @@ public class EditStudentController {
         }
 
         try {
-            studentDAO.deleteStudent(id);
+            StudentDao.deleteStudent(id);
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de la suppression");
         }

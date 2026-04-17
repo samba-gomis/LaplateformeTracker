@@ -1,9 +1,13 @@
+package controller;
+import database.StudentDao;
+import model.Student;
+
 public class AddStudentController {
 
-    private StudentDAO studentDAO;
+    private StudentDao StudentDao;
 
     public AddStudentController() {
-        this.studentDAO = new StudentDAO();
+        this.StudentDao = new StudentDao();
     }
 
     public void addStudent(String firstName, String lastName, int age, double grade) {
@@ -26,7 +30,7 @@ public class AddStudentController {
 
         try {
             Student student = new Student(firstName, lastName, age, grade);
-            studentDAO.addStudent(student);
+            StudentDao.addStudent(student);
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'ajout de l'étudiant");
         }

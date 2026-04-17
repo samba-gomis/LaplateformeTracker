@@ -10,8 +10,8 @@ public class DatabaseConnection {
 
     // Database configuration
     private static final String URL      = "jdbc:postgresql://localhost:5432/laplateforme_tracker";
-    private static final String USER     = "postgres";     
-    private static final String PASSWORD = "yourpassword"; 
+    private static final String USER     = "admin";     
+    private static final String PASSWORD = "admin123"; 
 
     // Unique instance 
     private static DatabaseConnection instance;

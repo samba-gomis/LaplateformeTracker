@@ -3,18 +3,34 @@ import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.LoadListener;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.Reader;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
+import javafx.fxml.Initializable;
+import javax.xml.bind.Unmarshaller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
+import model.Student;
+import database.*;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -26,7 +42,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class MainController {
+public class StudentFormController implements Initializable{
 
     @FXML private Button addBtn;
     @FXML private PieChart agePieChart;
@@ -62,6 +78,9 @@ public class MainController {
     @FXML private TableView<Student> studentTable;
     @FXML private Label totalStudentsLabel;
     @FXML private Label errorLabel;
+    private ObservableList<Student> masterData = FXCollections.observableArrayList();
+    private FilteredList<Student> filteredData;
+
 
     @FXML void onAdd(ActionEvent event) {
         try {
@@ -73,6 +92,8 @@ public class MainController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
+            updatePieChart();
+            updateBarChart();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,6 +114,9 @@ public class MainController {
                 try {
                     StudentDao.deleteStudent(selectedStudent.getStudentById()); //Use the DAO model to delete a student
                     studentTable.getItems().remove(selectedStudent); //remove from the table
+                    updatePieChart();
+                    updateBarChart();
+
                 } catch (Exception e) {
                     errorLabel.setText("Error while deleting");
                 }
@@ -126,10 +150,29 @@ public class MainController {
         }
 
 
+
     }
 
     @FXML
     void onExportHtml(ActionEvent event) {
+        FileChooser fileChooser=new FileChooser(); //Choose the path
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML Files","*.html"));
+        File file = fileChooser.showSaveDialog(null);
+
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.println("<html><body><table border='1'>");
+            writer.println("<tr><th>ID</th><th>Nom</th><th>Prénom</th><th>Note</th></tr>");
+
+            for (Student s : StudentTable.getItems()) {
+                writer.println("<tr>");
+                writer.println("<td>" + s.getId() + "</td>");
+                writer.println("<td>" + s.getLastName() + "</td>");
+                writer.println("<td>" + s.getFirstName() + "</td>");
+                writer.println("<td>" + s.getGrade() + "</td>");
+                writer.println("</tr>");
+            }
+            writer.println("</table></body></html>");
+        } catch (Exception e) { e.printStackTrace(); }
 
     }
 
@@ -150,12 +193,6 @@ public class MainController {
                 e.printStackTrace();
             }
         }
-
-    }
-
-
-    @FXML
-    void onExportPdf(ActionEvent event) {
 
     }
 
@@ -194,19 +231,47 @@ public class MainController {
         }
 
     }
-
     @FXML
     void onImportCSV(ActionEvent event) {
-
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(";");
+                Student s = new Student(data[1], data[2], Integer.parseInt(data[3]), Double.parseDouble(data[4]));
+                StudentTable.getItems().add(s);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     @FXML
     void onImportJSON(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
 
+        try (Reader reader = new FileReader(file)) {
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Student>>(){}.getType();
+            List<Student> students = gson.fromJson(reader, listType);
+
+            StudentTable.getItems().addAll(students);
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     @FXML
     void onImportXML(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(StudentListWrapper.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            StudentListWrapper wrapper = (StudentListWrapper) unmarshaller.unmarshal(file);
+
+            StudentTable.getItems().addAll(wrapper.getStudents());
+        } catch (Exception e) { e.printStackTrace(); }
 
     }
 
@@ -229,68 +294,182 @@ public class MainController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } 
+        }
 
     }
-
     @FXML
     void onModify(ActionEvent event) {
-        Student selected=studentTable.getSelectionModel().getSelectedItem(); //Take the student from the table
+        Student selected = studentTable.getSelectionModel().getSelectedItem();
 
-        if(selected!=null) {
+        if (selected != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StudentFormView.fxml")); //Load the Form view
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/StudentFormView.fxml"));
                 Parent root = loader.load();
-
-                StudentFormController controller=loader.getController(); //Take the controller of the view
+                StudentFormController controller = loader.getController();
                 controller.prepareFields(selected);
 
                 Stage stage = new Stage();
                 stage.setTitle("Modify a student");
                 stage.setScene(new Scene(root));
                 stage.show();
+                updatePieChart();
+                updateBarChart();
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        } Alert alert=new Alert(Alert.AlertType.WARNING); //Error gestion
-          alert.setContentText("Select a student first!");
-          alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Select a student first!");
+            alert.show();
+        }
     }
-
     @FXML
     void onSearch(ActionEvent event) {
+        String searchText = searchField.getText().toLowerCase();
 
+        filteredData.setPredicate(student -> {
+
+            if (searchText.isEmpty()) {
+                return true;
+            }
+
+            if (student.getFirstName().toLowerCase().contains(searchText)) return true;
+            if (student.getLastName().toLowerCase().contains(searchText)) return true;
+            return String.valueOf(student.getId()).contains(searchText);
+        });
     }
 
     @FXML
+    void onReset(ActionEvent event) {
+        searchField.clear();
+        filteredData.setPredicate(s -> true);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        filteredData = new FilteredList<>(masterData, p -> true);
+
+
+        colName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        colSurname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        colGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colAge.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        SortedList<Student> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(studentTable.comparatorProperty());
+        studentTable.setItems(sortedData);
+
+        updatePieChart();
+        updateBarChart();
+    }
+    @FXML
     void onSortByAge(ActionEvent event) {
+        studentTable.getSortOrder().clear();
+        studentTable.getSortOrder().add(colAge);
+
+        colAge.setSortType(TableColumn.SortType.ASCENDING);
+        studentTable.sort();
+
 
     }
 
     @FXML
     void onSortByGPA(ActionEvent event) {
+        studentTable.getSortOrder().clear();
+        studentTable.getSortOrder().add(colGrade);
+
+        colAge.setSortType(TableColumn.SortType.ASCENDING);
+        studentTable.sort();
 
     }
 
     @FXML
     void onSortByID(ActionEvent event) {
+        studentTable.getSortOrder().clear();
+        studentTable.getSortOrder().add(colID);
+
+        colAge.setSortType(TableColumn.SortType.ASCENDING);
+        studentTable.sort();
 
     }
 
     @FXML
     void onSortByName(ActionEvent event) {
+        studentTable.getSortOrder().clear();
+        studentTable.getSortOrder().add(colName);
+
+        colName.setSortType(TableColumn.SortType.ASCENDING);
+        studentTable.sort();
 
     }
 
     @FXML
     void onSortBySurname(ActionEvent event) {
+        studentTable.getSortOrder().clear();
+        studentTable.getSortOrder().add(colSurname);
+
+        colSurname.setSortType(TableColumn.SortType.ASCENDING);
+        studentTable.sort();
 
     }
 
     @FXML
     void onToggleAutoSave(ActionEvent event) {
 
+        boolean isAutoSaveEnabled = autoSaveToggle.isSelected();
+
+        if (isAutoSaveEnabled) {
+            System.out.println("Auto-save enabled!");
+        } else {
+            System.out.println("Auto-save off");
+        }
+    }
+
+    private void updatePieChart() {
+
+        agePieChart.getData().clear();
+
+        int underage = 0;
+        int legalAge = 0;
+
+        for (Student s : masterData) {
+            if (s.getAge() < 18) underage++;
+            else legalAge++;
+        }
+        agePieChart.getData().add(new PieChart.Data("Underage", underage));
+        agePieChart.getData().add(new PieChart.Data("Adults", legalAge));
+
+        totalStudentsLabel.setText("Total: " + masterData.size());
+
+        double sum = 0;
+        for(Student s : masterData) sum += s.getGrade();
+        double avg = masterData.isEmpty() ? 0 : sum / masterData.size();
+        avgLabel.setText(String.format("Average: %.2f", avg));
+    }
+
+    private void updateBarChart() {
+        gradesBarChart.getData().clear();
+
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName("Grades Distribution");
+
+        int countA = 0;
+        int countB = 0;
+        int countC = 0;
+
+        for (Student s : masterData) {
+            if (s.getGrade() >= 15) countA++;
+            else if (s.getGrade() >= 10) countB++;
+            else countC++;
+        }
+
+        series.getData().add(new XYChart.Data<>("15-20", countA));
+        series.getData().add(new XYChart.Data<>("10-15", countB));
+        series.getData().add(new XYChart.Data<>("0-10", countC));
+
+        gradesBarChart.getData().add(series);
     }
 
 }
