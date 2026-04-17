@@ -123,7 +123,7 @@ public class StudentDao {
     // param id The ID of the student to delete
     // return true if the deletion succeeded, false otherwise
      
-    public boolean deleteStudent(int id) {
+    public static boolean deleteStudent(int id) {
         String sql = "DELETE FROM student WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

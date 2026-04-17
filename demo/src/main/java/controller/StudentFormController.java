@@ -1,3 +1,5 @@
+package controller;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,4 +54,4 @@ public class StudentFormController {
             titleLabel.setText("An error occurred");
         }
     }
-}"
+}
