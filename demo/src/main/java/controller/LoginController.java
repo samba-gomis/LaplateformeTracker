@@ -20,7 +20,7 @@ public class LoginController {
 
     // Called when clicking "Validate" button
     @FXML
-    public void OnRegisterClick() {
+    public void onRegisterClick() {
 
 
         try {
@@ -36,16 +36,16 @@ public class LoginController {
 
     // Called when pressing Enter in username field
     @FXML
-    public void OnInputClick() {
+    public void onInputClick() {
         System.out.println("Username entered: " + userInput.getText());
     }
 
 
     // Called when pressing Enter in password field
     @FXML
-    public void OnPasswordClick() {
+    public void onPasswordClick() {
         System.out.println("Password field submitted");
-        OnRegisterClick(); // optional: trigger login directly
+        onRegisterClick(); // optional: trigger login directly
     }
 
 
