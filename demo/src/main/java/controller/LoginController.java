@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 public class LoginController {
 
 
-    // FXML fields (must match fx:id in FXML)
+    // FXML fields
     @FXML
     private TextField userInput;
 
@@ -49,7 +49,7 @@ public class LoginController {
     }
 
 
-    // Simple authentication (for school project)
+    // Simple authentication
     public void login(String username, String password) {
 
         // Vérification username
@@ -64,7 +64,7 @@ public class LoginController {
 
         // Login simple (hardcoded)
         if (!username.equals("admin") || !password.equals("admin")) {
-            throw new IllegalArgumentException("Identifiants incorrects");
+            throw new IllegalArgumentException("Incorrects id");
         }
     }
 }

@@ -362,6 +362,8 @@ public class MainController implements Initializable{
         updatePieChart();
         updateBarChart();
     }
+
+    //All sort methods
     @FXML
     void onSortByAge(ActionEvent event) {
         studentTable.getSortOrder().clear();
@@ -433,10 +435,10 @@ public class MainController implements Initializable{
         int legalAge = 0;
 
         for (Student s : masterData) {
-            if (s.getAge() < 18) underage++;
+            if (s.getAge() < 18) underage++; //add to underage if students are not more than 18
             else legalAge++;
         }
-        agePieChart.getData().add(new PieChart.Data("Underage", underage));
+        agePieChart.getData().add(new PieChart.Data("Underage", underage)); //update the pie chart
         agePieChart.getData().add(new PieChart.Data("Adults", legalAge));
 
         totalStudentsLabel.setText("Total: " + masterData.size());
@@ -444,26 +446,26 @@ public class MainController implements Initializable{
         double sum = 0;
         for(Student s : masterData) sum += s.getGrade();
         double avg = masterData.isEmpty() ? 0 : sum / masterData.size();
-        avgLabel.setText(String.format("Average: %.2f", avg));
+        avgLabel.setText(String.format("Average: %.2f", avg)); //Auto text of average of the whole class
     }
 
     private void updateBarChart() {
         gradesBarChart.getData().clear();
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
-        series.setName("Grades Distribution");
+        series.setName("Grades Distribution"); //Set name of the bar
 
-        int countA = 0;
+        int countA = 0; //counts initializing
         int countB = 0;
         int countC = 0;
 
-        for (Student s : masterData) {
-            if (s.getGrade() >= 15) countA++;
+        for (Student s : masterData) { //students in masterData
+            if (s.getGrade() >= 15) countA++; //sort by grade
             else if (s.getGrade() >= 10) countB++;
             else countC++;
         }
 
-        series.getData().add(new XYChart.Data<>("15-20", countA));
+        series.getData().add(new XYChart.Data<>("15-20", countA)); //Add data to the bar
         series.getData().add(new XYChart.Data<>("10-15", countB));
         series.getData().add(new XYChart.Data<>("0-10", countC));
 
