@@ -72,7 +72,7 @@ Avant de commencer, assure-toi d'avoir installé :
 
 ### 1. Cloner le dépôt
 
-```bash
+``bash
 git clone https://github.com/prenom-nom/LaplateformeTracker.git
 cd LaplateformeTracker
 ```
