@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 public class LoginController {
 
 
-    // FXML fields (must match fx:id in FXML)
+    // FXML fields
     @FXML
     private TextField userInput;
 
@@ -20,7 +20,7 @@ public class LoginController {
 
     // Called when clicking "Validate" button
     @FXML
-    public void OnRegisterClick() {
+    public void onRegisterClick() {
 
 
         try {
@@ -36,20 +36,20 @@ public class LoginController {
 
     // Called when pressing Enter in username field
     @FXML
-    public void OnInputClick() {
+    public void onInputClick() {
         System.out.println("Username entered: " + userInput.getText());
     }
 
 
     // Called when pressing Enter in password field
     @FXML
-    public void OnPasswordClick() {
+    public void onPasswordClick() {
         System.out.println("Password field submitted");
-        OnRegisterClick(); // optional: trigger login directly
+        onRegisterClick(); // optional: trigger login directly
     }
 
 
-    // Simple authentication (for school project)
+    // Simple authentication
     public void login(String username, String password) {
 
         // Vérification username
@@ -64,7 +64,7 @@ public class LoginController {
 
         // Login simple (hardcoded)
         if (!username.equals("admin") || !password.equals("admin")) {
-            throw new IllegalArgumentException("Identifiants incorrects");
+            throw new IllegalArgumentException("Incorrects id");
         }
     }
 }
