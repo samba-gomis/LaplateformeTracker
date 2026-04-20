@@ -1,71 +1,99 @@
 package controller;
 
-
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.stage.Stage;
 
 public class LoginController {
 
-
     // FXML fields
-    @FXML
-    private TextField userInput;
+    @FXML private PasswordField passwordInput;
+    @FXML private Button        validateButton;
+    @FXML private Label         errorLabel;  
 
-
-    @FXML
-    private PasswordField passwordInput;
-
-
-    // Called when clicking "Validate" button
+    // Validate button click
     @FXML
     public void onRegisterClick() {
-
-
         try {
             login(userInput.getText(), passwordInput.getText());
-            System.out.println("Login successful!");
-
+            openMainView();
 
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            showError(e.getMessage());
         }
     }
 
-
-    // Called when pressing Enter in username field
-    @FXML
+    // Enter key in username field, move focus to password
     public void onInputClick() {
-        System.out.println("Username entered: " + userInput.getText());
+        passwordInput.requestFocus();
     }
 
-
-    // Called when pressing Enter in password field
+    // Enter key in password field, trigger login
     @FXML
     public void onPasswordClick() {
-        System.out.println("Password field submitted");
-        onRegisterClick(); // optional: trigger login directly
+        onRegisterClick();
     }
 
-
-    // Simple authentication
+    // Authentication logic
+    // Validates credentials. Throws IllegalArgumentException if invalid
+    
     public void login(String username, String password) {
 
-        // Vérification username
         if (username == null || username.trim().isEmpty()) {
-            throw new IllegalArgumentException("Username is required");
+            throw new IllegalArgumentException("Username is required.");
         }
 
-        // Vérification password
         if (password == null || password.trim().isEmpty()) {
-            throw new IllegalArgumentException("Password is required");
+            throw new IllegalArgumentException("Password is required.");
         }
 
-        // Login simple (hardcoded)
+        // Hardcoded credentials — replace with DB check for production
         if (!username.equals("admin") || !password.equals("admin")) {
-            throw new IllegalArgumentException("Incorrects id");
+            throw new IllegalArgumentException("Incorrect username or password.");
         }
     }
-}
 
+    // Navigate to MainView after successful login
+    // Loads MainView.fxml, opens the main window and closes the login window
+    private void openMainView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
+            Parent root = loader.load();
+
+            Stage mainStage = new Stage();
+            mainStage.setTitle("La Plateforme Tracker");
+            mainStage.setScene(new Scene(root));
+            mainStage.setMinWidth(800);
+            mainStage.setMinHeight(500);
+            mainStage.show();
+
+            // Close the login window
+            Stage loginStage = (Stage) validateButton.getScene().getWindow();
+            loginStage.close();
+
+        } catch (Exception e) {
+            showError("Failed to load main view: " + e.getMessage());
+        }
+    }
+
+    // Show an error message in the UI
+
+    private void showError(String message) {
+        System.err.println("Login error: " + message);
+
+        // Show in UI if errorLabel is wired in the FXML
+        if (errorLabel != null) {
+            errorLabel.setText(message);
+            errorLabel.setVisible(true);
+        }
+
+        // Clear the password field for security
+        passwordInput.clear();
+    }
+}
