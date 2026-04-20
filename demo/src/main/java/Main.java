@@ -26,7 +26,7 @@ public class Main extends Application {
             Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
 
             // Apply the global stylesheet
-            scene.getStylesheets().add(getClass().getResource("/styles/app.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/view/loginview.css").toExternalForm());
 
             // Configure the main window
             primaryStage.setTitle(APP_TITLE);
