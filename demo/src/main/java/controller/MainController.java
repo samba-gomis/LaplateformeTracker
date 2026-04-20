@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class StudentFormController {
+public class MainController {
 
     @FXML
     private TextField ageText;
@@ -53,4 +53,4 @@ public class StudentFormController {
             titleLabel.setText("An error occurred");
         }
     }
-}"
+}

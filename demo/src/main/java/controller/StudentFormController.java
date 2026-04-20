@@ -52,4 +52,4 @@ public class StudentFormController {
             titleLabel.setText("An error occurred");
         }
     }
-}"
+}
