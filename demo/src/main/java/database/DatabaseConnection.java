@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     // Database configuration
-    private static final String URL      = "jdbc:postgresql://localhost:5432/laplateforme_tracker";
-    private static final String USER     = "admin";     
-    private static final String PASSWORD = "admin123"; 
+    private static final String URL      = "jdbc:postgresql://localhost:5432/laplateformetracker";
+    private static final String USER     = "postgres";     
+    private static final String PASSWORD = "***REMOVED-SECRET***"; 
 
     // Unique instance 
     private static DatabaseConnection instance;
