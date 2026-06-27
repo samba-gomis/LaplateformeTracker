@@ -9,9 +9,12 @@ public class Student {
     private int    age;
     private double grade;
 
+    // Required by JAXB for XML marshalling/unmarshalling
+    public Student() {}
+
     // Constructor (with ID)
     // Full constructor — used when retrieving a student from the database (the ID is already known)
-    
+
     public Student(int id, String firstName, String lastName, int age, double grade) {
         this.id        = id;
         this.firstName = firstName;

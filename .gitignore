@@ -1,0 +1,15 @@
+# Maven build output
+target/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code (keep .vscode/ committed so teammates share the same run config)
+.vscode/*.log
+
+# OS
+.DS_Store
+Thumbs.db

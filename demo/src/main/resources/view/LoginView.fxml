@@ -17,6 +17,11 @@
 
 <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="397.0" stylesheets="@loginview.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
+      <ImageView blendMode="MULTIPLY" fitHeight="306.0" fitWidth="711.0" mouseTransparent="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/img3.jpg" />
+         </image>
+      </ImageView>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" spacing="20.0" stylesheets="@loginview.css">
          <children>
             <Label id="labelText" alignment="CENTER" contentDisplay="CENTER" stylesheets="@loginview.css" text="Welcome back! " textFill="#0b7cb5">
@@ -92,10 +97,5 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <ImageView blendMode="MULTIPLY" fitHeight="306.0" fitWidth="711.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/img3.jpg" />
-         </image>
-      </ImageView>
    </children>
 </StackPane>

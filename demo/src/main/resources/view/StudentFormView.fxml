@@ -17,6 +17,11 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentFormController">
    <children>
+      <ImageView fitHeight="576.0" fitWidth="667.0" mouseTransparent="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/img4.png" />
+         </image>
+      </ImageView>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="400.0">
          <children>
             <HBox alignment="CENTER" prefHeight="28.0" prefWidth="400.0">
@@ -94,11 +99,6 @@
             </HBox>
          </children>
       </VBox>
-      <ImageView fitHeight="576.0" fitWidth="667.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/img4.png" />
-         </image>
-      </ImageView>
       <HBox alignment="BOTTOM_CENTER">
          <children>
             <VBox alignment="BOTTOM_CENTER" prefHeight="436.0" prefWidth="278.0" spacing="2.0">

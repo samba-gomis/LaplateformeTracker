@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Plateforme Tracker",
+            "request": "launch",
+            "mainClass": "Main",
+            "preLaunchTask": "Run JavaFX App"
+        }
+    ]
+}

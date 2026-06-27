@@ -172,8 +172,8 @@ public class MainController implements Initializable {
     @FXML void onImportXML(ActionEvent e) { File f = getFileOpen(); if (f != null) try { processImport(FileManagement.importXML(f)); } catch (Exception ex) { showError("Import failed"); } }
 
     private void processImport(List<Student> students) {
-        for (Student s : students) { if (dao.addStudent(s)) studentList.add(s); }
-        updateCharts(); updateStatsLabels();
+        for (Student s : students) { dao.addStudent(s); }
+        loadStudentsFromDatabase();
     }
 
     //Charts and stats
