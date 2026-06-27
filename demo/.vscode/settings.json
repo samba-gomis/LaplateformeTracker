@@ -2,7 +2,7 @@
     "java.jdt.ls.java.home": "C:\\Users\\samba\\Downloads\\openjdk-26_windows-x64_bin\\jdk-26",
     "java.configuration.runtimes": [
         {
-            "name": "JavaSE-21",
+            "name": "JavaSE-25",
             "path": "C:\\Users\\samba\\Downloads\\openjdk-26_windows-x64_bin\\jdk-26",
             "default": true
         }
