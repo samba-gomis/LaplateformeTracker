@@ -72,6 +72,7 @@ public class LoginController {
             mainStage.setScene(new Scene(root));
             mainStage.setMinWidth(800);
             mainStage.setMinHeight(500);
+            mainStage.centerOnScreen();
             mainStage.show();
 
             Stage loginStage = (Stage) validateButton.getScene().getWindow();

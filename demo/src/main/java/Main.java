@@ -34,6 +34,7 @@ public class Main extends Application {
             primaryStage.setResizable(true);
             primaryStage.setMinWidth(700);
             primaryStage.setMinHeight(450);
+            primaryStage.centerOnScreen();
 
             // Close the DB connection cleanly when the window is closed
             primaryStage.setOnCloseRequest(event -> {
