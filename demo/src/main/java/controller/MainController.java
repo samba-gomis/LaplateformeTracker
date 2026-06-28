@@ -144,8 +144,19 @@ public class MainController implements Initializable {
     @FXML
     void onLogOut(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
-            ((Stage) studentTable.getScene().getWindow()).setScene(new Scene(root));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+            Scene loginScene = new Scene(loader.load(), 900, 600);
+            loginScene.getStylesheets().add(getClass().getResource("/view/loginview.css").toExternalForm());
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("La Plateforme Tracker");
+            loginStage.setScene(loginScene);
+            loginStage.setMinWidth(700);
+            loginStage.setMinHeight(450);
+            loginStage.centerOnScreen();
+            loginStage.show();
+
+            ((Stage) studentTable.getScene().getWindow()).close();
         } catch (Exception e) { showError("Failed to log out"); }
     }
 
