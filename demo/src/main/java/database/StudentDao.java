@@ -11,11 +11,13 @@ import java.util.List;
 
 public class StudentDao {
 
-    // Connection retrieved via the Singleton
-    private final Connection connection;
-
-    public StudentDao() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+    // FIX : the connection used to be cached once in the constructor.
+    // DatabaseConnection.getConnection() transparently reconnects when the
+    // connection is closed/invalid, but that only works if callers fetch it
+    // fresh each time — a cached reference kept using the dead Connection
+    // forever after a drop, silently failing every query until app restart.
+    private Connection getConnection() {
+        return DatabaseConnection.getInstance().getConnection();
     }
 
     // ADD : Insert a new student
@@ -25,7 +27,7 @@ public class StudentDao {
     public boolean addStudent(Student student) {
         String sql = "INSERT INTO student (first_name, last_name, age, grade) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             stmt.setString(1, student.getFirstName());
             stmt.setString(2, student.getLastName());
@@ -49,7 +51,7 @@ public class StudentDao {
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM student ORDER BY last_name, first_name";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -71,7 +73,7 @@ public class StudentDao {
     public Student getStudentById(int id) {
         String sql = "SELECT * FROM student WHERE id = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -95,7 +97,7 @@ public class StudentDao {
     public boolean updateStudent(Student student) {
         String sql = "UPDATE student SET first_name = ?, last_name = ?, age = ?, grade = ? WHERE id = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             stmt.setString(1, student.getFirstName());
             stmt.setString(2, student.getLastName());
@@ -122,12 +124,10 @@ public class StudentDao {
     // param id The ID of the student to delete
     // return true if the deletion succeeded, false otherwise
 
-    // FIX : removed 'static' keyword — a static method cannot access
-    // the non-static field 'connection', which caused a compilation error
     public boolean deleteStudent(int id) {
         String sql = "DELETE FROM student WHERE id = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             int rowsAffected = stmt.executeUpdate();

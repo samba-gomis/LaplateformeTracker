@@ -109,7 +109,8 @@ public class MainController implements Initializable {
         Student selected = studentTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete student: " + selected.getFullName() + "?", ButtonType.OK, ButtonType.CANCEL);
-            if (alert.showAndWait().get() == ButtonType.OK) {
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 if (dao.deleteStudent(selected.getId())) {
                     studentList.remove(selected);
                     updateCharts();
