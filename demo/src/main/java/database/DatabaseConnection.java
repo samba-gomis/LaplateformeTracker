@@ -9,9 +9,12 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     // Database configuration
-    private static final String URL      = "jdbc:postgresql://localhost:5432/laplateformetracker";
-    private static final String USER     = "postgres";     
-    private static final String PASSWORD = "***REMOVED-SECRET***"; 
+    // FIX : credentials used to be hardcoded (including a real password),
+    // and this file is committed to a public git repo. Read them from
+    // environment variables instead, with safe local-dev defaults.
+    private static final String URL      = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://localhost:5432/laplateformetracker");
+    private static final String USER     = System.getenv().getOrDefault("DB_USER", "postgres");
+    private static final String PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "");
 
     // Unique instance 
     private static DatabaseConnection instance;
@@ -50,16 +53,16 @@ public class DatabaseConnection {
     // Get the SQL connection
     // Returns the Connection object used to execute SQL queries
     // Attempts to reconnect automatically if the connection is closed or invalid
-    
-    public Connection getConnection() {
-        try {
-            // Automatic reconnection if the connection is lost
-            if (connection == null || connection.isClosed()) {
-                System.out.println(" Reconnecting to the database...");
-                this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            }
-        } catch (SQLException e) {
-            System.err.println(" Unable to reconnect: " + e.getMessage());
+    // FIX : this used to swallow SQLException and return null on failure,
+    // which made every DAO call blow up with an uncaught NullPointerException
+    // (instead of the SQLException callers already catch) whenever the
+    // database was unreachable — including during MainController.initialize(),
+    // which crashed app startup entirely. Let the exception propagate instead.
+
+    public Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            System.out.println(" Reconnecting to the database...");
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         }
         return connection;
     }

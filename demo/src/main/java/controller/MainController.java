@@ -144,6 +144,13 @@ public class MainController implements Initializable {
 
     @FXML
     void onLogOut(ActionEvent event) {
+        // FIX : the auto-save Timer kept running in the background after logout
+        // (it's a daemon thread and a window always stays open), silently
+        // writing autosave_backup.csv from a stale studentList forever.
+        if (autoSaveTimer != null) {
+            autoSaveTimer.cancel();
+            autoSaveTimer = null;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
             Scene loginScene = new Scene(loader.load(), 900, 600);

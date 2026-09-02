@@ -105,13 +105,15 @@ CREATE TABLE student (
 
 ### 3. Configurer la connexion
 
-Dans le fichier `DatabaseConnection.java` (ou `config.properties`), modifie les paramètres :
+Les identifiants sont lus depuis des variables d'environnement (jamais commités en dur dans le code) :
 
-```java
-private static final String URL      = "jdbc:postgresql://localhost:5432/laplateforme_tracker";
-private static final String USER     = "ton_utilisateur";
-private static final String PASSWORD = "ton_mot_de_passe";
+```bash
+DB_URL=jdbc:postgresql://localhost:5432/laplateformetracker
+DB_USER=ton_utilisateur
+DB_PASSWORD=ton_mot_de_passe
 ```
+
+Sans ces variables, l'application utilise par défaut `jdbc:postgresql://localhost:5432/laplateformetracker` avec l'utilisateur `postgres` et un mot de passe vide.
 
 ---
 

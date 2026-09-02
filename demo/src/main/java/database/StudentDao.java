@@ -16,7 +16,7 @@ public class StudentDao {
     // connection is closed/invalid, but that only works if callers fetch it
     // fresh each time — a cached reference kept using the dead Connection
     // forever after a drop, silently failing every query until app restart.
-    private Connection getConnection() {
+    private Connection getConnection() throws SQLException {
         return DatabaseConnection.getInstance().getConnection();
     }
 
