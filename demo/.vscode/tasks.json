@@ -20,6 +20,22 @@
                 "panel": "shared"
             },
             "problemMatcher": "$javac"
+        },
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "mvn",
+            "args": ["process-classes"],
+            "options": {
+                "env": {
+                    "JAVA_HOME": "C:\\Users\\samba\\Downloads\\openjdk-26_windows-x64_bin\\jdk-26"
+                }
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": "$javac"
         }
     ]
 }
